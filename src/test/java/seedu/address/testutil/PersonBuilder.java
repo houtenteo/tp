@@ -5,6 +5,7 @@ import seedu.address.model.person.IsDone;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 
 /**
  * A utility class to help with building Person objects.
@@ -78,7 +79,7 @@ public class PersonBuilder {
      * @return the person
      */
     public Person build() {
-        return new Person(name, phone, email, isDone);
+        return new Person(name, phone, email, isDone, new Remark(""));
     }
 
 }

@@ -12,6 +12,7 @@ import seedu.address.model.person.IsDone;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,17 +26,20 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final boolean isDone;
+    private final String remark;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("done") boolean isDone) {
+                             @JsonProperty("email") String email, @JsonProperty("done") boolean isDone,
+                             @JsonProperty("remark") String remark) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.isDone = isDone;
+        this.remark = remark;
     }
 
     /**
@@ -46,6 +50,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         isDone = source.getIsDone().value;
+        remark = source.getRemark().value;
     }
 
     /**
@@ -82,7 +87,16 @@ class JsonAdaptedPerson {
 
         final IsDone modelIsDone = new IsDone(isDone);
 
-        return new Person(modelName, modelPhone, modelEmail, modelIsDone);
+        final Remark modelRemark;
+
+        if (remark == null) {
+            modelRemark = new Remark("");
+        } else {
+            modelRemark = new Remark(remark);
+        }
+
+
+        return new Person(modelName, modelPhone, modelEmail, modelIsDone, modelRemark);
     }
 
 }

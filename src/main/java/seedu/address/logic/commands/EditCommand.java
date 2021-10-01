@@ -1,3 +1,4 @@
+
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -21,6 +22,7 @@ import seedu.address.model.person.IsDone;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -94,7 +96,7 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         IsDone updatedIsDone = editPersonDescriptor.getIsDone().orElse(personToEdit.getIsDone());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedIsDone);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedIsDone, new Remark(""));
     }
 
     @Override

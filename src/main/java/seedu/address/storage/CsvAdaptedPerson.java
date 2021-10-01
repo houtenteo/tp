@@ -10,6 +10,7 @@ import seedu.address.model.person.IsDone;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 
 /**
  * CSV-friendly version of {@link Person}.
@@ -83,6 +84,6 @@ public class CsvAdaptedPerson {
 
         final IsDone modelIsDone = new IsDone(doneString.equals("TRUE"));
 
-        return new Person(modelName, modelPhone, modelEmail, modelIsDone);
+        return new Person(modelName, modelPhone, modelEmail, modelIsDone, new Remark(""));
     }
 }

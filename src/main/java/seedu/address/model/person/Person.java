@@ -17,16 +17,18 @@ public class Person {
 
     // Data fields
     private final IsDone isDone;
+    private final Remark remark;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, IsDone isDone) {
-        requireAllNonNull(name, phone, email, isDone);
+    public Person(Name name, Phone phone, Email email, IsDone isDone, Remark remark) {
+        requireAllNonNull(name, phone, email, isDone, remark);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.isDone = isDone;
+        this.remark = remark;
     }
 
     public Name getName() {
@@ -43,6 +45,10 @@ public class Person {
 
     public IsDone getIsDone() {
         return isDone;
+    }
+
+    public Remark getRemark() {
+        return remark;
     }
 
     /**

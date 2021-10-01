@@ -40,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label isDone;
+    @FXML
+    private Label remark;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -57,6 +59,8 @@ public class PersonCard extends UiPart<Region> {
         } else {
             isDone.setText("Called: False");
         }
+
+        remark.setText(person.getRemark().value);
 
     }
 
