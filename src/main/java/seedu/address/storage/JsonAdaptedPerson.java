@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,11 +32,11 @@ class JsonAdaptedPerson {
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("done") boolean isDone) {
+                             @JsonProperty("email") String email, @JsonProperty("done") Boolean isDone) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.isDone = isDone;
+        this.isDone = Objects.requireNonNullElse(isDone, false);
     }
 
     /**
