@@ -36,7 +36,6 @@ public class CsvAddressBookImportExport implements ImportExport {
      * Constructor of the import export
      */
     public CsvAddressBookImportExport(Path filePath) {
-        requireNonNull(filePath);
         this.filePath = filePath;
     }
 
