@@ -15,7 +15,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
-    private Path importExport = Paths.get("data" , "import.csv");
+    private Path importExport = Paths.get("data" , "importAddressBook.csv");
 
     /**
      * Creates a {@code UserPrefs} with default values.

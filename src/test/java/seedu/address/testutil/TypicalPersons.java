@@ -20,9 +20,11 @@ import seedu.address.model.person.Person;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withEmail("alice@example.com").withPhone("94351253").withDone("false").build();
+            .withEmail("alice@example.com").withPhone("94351253").withDone("false").withAddress("MY HOUSE")
+            .withGender("F").withAge("22").withInterest("Running").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withEmail("johnd@example.com").withPhone("98765432").withDone("false").build();
+            .withEmail("johnd@example.com").withPhone("98765432").withDone("false").withAddress("HIS HOUSE")
+            .withDone("false").withGender("M").withAge("18").withInterest("Eating", "Sleeping").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withDone("false").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
