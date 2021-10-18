@@ -1,22 +1,16 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Gender;
 import seedu.address.model.person.IsDone;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.interests.Interest;
-import seedu.address.model.person.interests.InterestsList;
 
 /**
  * CSV-friendly version of {@link Person}.
@@ -25,8 +19,8 @@ public class CsvAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field in Import file is missing!";
     // This sets the ordering of which person object constructor takes in  data
-    private static Map<String, Integer> map = Stream.of(new Object[][] {
-            { "Name", 0 }, { "Phone", 1 }, {"Email", 2}, {"Done", 3}
+    public static final Map<String, Integer> ATTRIBUTE_ORDERING = Stream.of(new Object[][] {
+            {"Name", 0}, {"Done", 3}, {"Email", 2}, { "Phone", 1 }
     }).collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
     private String name;
@@ -34,16 +28,10 @@ public class CsvAdaptedPerson {
     private String email;
     private String doneString;
 
-    //Fields that houten added. Pls add this to the csv portion as well.
-    private String address;
-    private String gender;
-    private String age;
-    private final List<Interest> interests = new ArrayList<>();
-
     /**
      * Constructs a {@code CsvAdaptedPerson} with the given person details.
      */
-    public CsvAdaptedPerson(String personDetails) {
+    public CsvAdaptedPerson(String personDetails) throws DataConversionException {
         setDetails(personDetails);
     }
 
@@ -57,14 +45,6 @@ public class CsvAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         doneString = source.getIsDone().value ? "TRUE" : "FALSE";
-        address = source.getAddress().value;
-        gender = source.getGender().value;
-        age = source.getAge().value;
-
-        //For this I somewhat followed the style of JsonAdapted person
-        //For the actual JsonAdaptedPerson, the interests portion is similar to how
-        //they originally implemented tag
-        interests.addAll(source.getInterests().getAllInterests());
     }
 
     /**
@@ -76,12 +56,19 @@ public class CsvAdaptedPerson {
      *
      * @param personDetails
      */
-    private void setDetails(String personDetails) {
-        String[] details = personDetails.split(";", 4);
-        this.name = details[map.get("Name")].trim();
-        this.phone = details[map.get("Phone")].trim();
-        this.email = details[map.get("Email")].trim();
-        this.doneString = details[map.get("Done")].trim().toUpperCase();
+    private void setDetails(String personDetails) throws DataConversionException {
+        String[] details = personDetails.split(";", CsvAdaptedPerson.ATTRIBUTE_ORDERING.keySet().size());
+
+        if (details.length != 4) {
+            throw new DataConversionException(new Exception("Delimiter Missing"
+                    + "\nEach row should have "
+                    + (CsvAdaptedPerson.ATTRIBUTE_ORDERING.keySet().size() - 1) + " ';' "));
+        }
+
+        this.name = details[ATTRIBUTE_ORDERING.get("Name")].trim();
+        this.phone = details[ATTRIBUTE_ORDERING.get("Phone")].trim();
+        this.email = details[ATTRIBUTE_ORDERING.get("Email")].trim();
+        this.doneString = details[ATTRIBUTE_ORDERING.get("Done")].trim().toUpperCase();
     }
 
     /**
@@ -119,32 +106,6 @@ public class CsvAdaptedPerson {
         }
         final IsDone modelIsDone = new IsDone(doneString);
 
-        //Houten added this
-
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-
-        final Address modelAddress = new Address(address);
-
-        if (!Gender.isValidGender(gender)) {
-            throw new IllegalValueException(Gender.MESSAGE_CONSTRAINTS);
-        }
-
-        final Gender modelGender = new Gender(gender);
-
-        if (!Age.isValidAge(age)) {
-            throw new IllegalValueException(Age.MESSAGE_CONSTRAINTS);
-        }
-
-        final Age modelAge = new Age(age);
-
-        final InterestsList modelInterests = new InterestsList();
-        for (Interest interest : interests) {
-            modelInterests.addInterest(interest);
-        }
-
-        return new Person(modelName, modelPhone, modelEmail, modelIsDone, modelAddress,
-                modelGender, modelAge, modelInterests);
+        return new Person(modelName, modelPhone, modelEmail, modelIsDone);
     }
 }

@@ -1,9 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Gender;
 import seedu.address.model.person.IsDone;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -33,10 +31,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setIsDone(person.getIsDone());
-        descriptor.setAddress(person.getAddress());
-        descriptor.setGender(person.getGender());
-        descriptor.setAge(person.getAge());
-        descriptor.setInterests(person.getInterests());
     }
 
     /**
@@ -68,22 +62,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withDone(String isDone) {
         descriptor.setIsDone(new IsDone(isDone));
-        return this;
-    }
-
-    /**
-     * Sets the {@code address} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
-        return this;
-    }
-
-    /**
-     * Sets the {@code gender} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withGender(String gender) {
-        descriptor.setGender(new Gender(gender));
         return this;
     }
 
