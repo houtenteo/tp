@@ -29,7 +29,8 @@ public class DoneCommandTest {
     @Test
     public void execute_personAcceptedByModel_doneSuccessful() {
         Person person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person donePerson = new Person(person.getName(), person.getPhone(), person.getEmail(), new IsDone("TRUE"));
+        Person donePerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                new IsDone("TRUE"), person.getAddress(), person.getGender(), person.getAge(), person.getInterests());
         DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(DoneCommand.MESSAGE_DONE_CALL_SUCCESS, donePerson);
@@ -51,7 +52,8 @@ public class DoneCommandTest {
     @Test
     public void execute_personAlreadyMarkedAsDone_showAppropriateMessage() {
         Person person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person donePerson = new Person(person.getName(), person.getPhone(), person.getEmail(), new IsDone("TRUE"));
+        Person donePerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                new IsDone("TRUE"), person.getAddress(), person.getGender(), person.getAge(), person.getInterests());
         model.setPerson(person, donePerson);
         DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 

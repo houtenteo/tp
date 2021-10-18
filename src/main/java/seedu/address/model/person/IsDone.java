@@ -25,7 +25,7 @@ public class IsDone {
     }
 
     /**
-     * Returns if a given string is a valid IsDone.
+     * Returns true if a given string is a valid IsDone.
      */
     public static boolean isValidIsDone(String test) {
         String testValid = test.toUpperCase(Locale.ROOT);

@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -35,7 +33,7 @@ public class CsvUtil {
      * @throws IOException thrown when file util could not read the file
      */
     public static List<Person> deserializeObjectFromCsvFile(Path filePath)
-            throws IOException, DataConversionException {
+            throws IOException {
         requireNonNull(filePath);
         return fromCsvString(FileUtil.readFromFile(filePath));
     }
@@ -59,7 +57,7 @@ public class CsvUtil {
         try {
             persons = deserializeObjectFromCsvFile(filePath);
         } catch (IOException e) {
-            logger.warning("Error reading from CsvFile file " + filePath);
+            logger.warning("Error reading from jsonFile file " + filePath + ": " + e);
             throw new DataConversionException(e);
         }
 
@@ -73,13 +71,13 @@ public class CsvUtil {
      * @param csv
      * @return
      */
-    public static List<Person> fromCsvString(String csv) throws DataConversionException {
+    static List<Person> fromCsvString(String csv) {
         unsuccessfulRow = new ArrayList<>();
         List<Person> persons = new ArrayList<>();
         String[] personRows = csv.split("\n");
 
         header = personRows[0];
-        checkValidHeader(header);
+        // Skips the header row and starts from the second row
         for (int i = 1; i < personRows.length; i++) {
             Optional<Person> temp = createPerson(personRows[i].trim(), i + 1);
             if (temp.equals(Optional.empty())) {
@@ -97,63 +95,17 @@ public class CsvUtil {
      * @param rowStringPerson
      * @return
      */
-    public static Optional<Person> createPerson(String rowStringPerson, int rowNumber) {
+    static Optional<Person> createPerson(String rowStringPerson, int rowNumber) {
         try {
             return Optional.of(new CsvAdaptedPerson(rowStringPerson).toModelType());
         } catch (IllegalValueException e) {
             logger.warning("CSV File Import error : In row " + rowNumber + " : " + e);
-            return Optional.empty();
-        } catch (DataConversionException e) {
-            logger.warning("CSV File Import error : In row " + rowNumber + " : " + e.toString());
             return Optional.empty();
         }
     }
 
     public static String getUnsuccessfulRow() {
         return unsuccessfulRow.toString();
-    }
-
-    /**
-     * Check header of CSV
-     *
-     * @param header first line of CSV that represents the header
-     * @throws DataConversionException thrown if header does not follow format
-     */
-    public static void checkValidHeader(String header)
-            throws DataConversionException {
-        String[] headerCheck = header.split(";", CsvAdaptedPerson.ATTRIBUTE_ORDERING.keySet().size());
-        String[] headerValid = headerOrder();
-
-        if (headerCheck.length == 1) {
-            throw new DataConversionException(new Exception("Wrong delimiter, Refer to user guide to use correct "
-                    + "delimiter.\nEach row should have "
-                    + (CsvAdaptedPerson.ATTRIBUTE_ORDERING.keySet().size() - 1) + " ';' "));
-        }
-
-        if (headerCheck.length != 4) {
-            throw new DataConversionException(new Exception("Missing/Extra Headers, Please check file"));
-        }
-
-        for (int i = 0; i < 4; i++) {
-            String upperHeader = headerCheck[i].toUpperCase(Locale.ROOT);
-            String upperValidHeader = headerValid[i].toUpperCase(Locale.ROOT);
-
-            if (!(upperHeader.contains(upperValidHeader))) {
-                throw new DataConversionException(new Exception("wrong header detected detected,"
-                        + "please double check file\nfirst row of csv must contain valid headers "
-                        + Arrays.toString(headerValid) + " in that order."));
-            }
-        }
-    }
-
-    private static String[] headerOrder() {
-        String[] headerKeySet = CsvAdaptedPerson.ATTRIBUTE_ORDERING.keySet().toArray(new String[0]);
-        String[] validOrder = new String[headerKeySet.length];
-        for (String key : headerKeySet) {
-            int pos = CsvAdaptedPerson.ATTRIBUTE_ORDERING.get(key);
-            validOrder[pos] = key;
-        }
-        return validOrder;
     }
 
 }

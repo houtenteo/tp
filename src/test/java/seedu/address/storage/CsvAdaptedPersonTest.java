@@ -33,7 +33,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidName_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidName_throwsIllegalValueException() {
         String csvString = INVALID_NAME + ";" + VALID_PHONE + ";" + VALID_EMAIL + ";" + VALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
@@ -41,7 +41,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_emptyName_throwsIllegalValueException() throws Exception {
+    public void toModelType_emptyName_throwsIllegalValueException() {
         String csvString = ";" + VALID_PHONE + ";" + VALID_EMAIL + ";" + VALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
@@ -49,7 +49,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidPhone_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidPhone_throwsIllegalValueException() {
         String csvString = VALID_NAME + ";" + INVALID_PHONE + ";" + VALID_EMAIL + ";" + VALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
@@ -57,7 +57,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_emptyPhone_throwsIllegalValueException() throws Exception {
+    public void toModelType_emptyPhone_throwsIllegalValueException() {
         String csvString = VALID_NAME + ";;" + VALID_EMAIL + ";" + VALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
@@ -65,7 +65,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidEmail_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidEmail_throwsIllegalValueException() {
         String csvString = VALID_NAME + ";" + VALID_PHONE + ";" + INVALID_EMAIL + ";" + VALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
@@ -73,7 +73,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_emptyEmail_throwsIllegalValueException() throws Exception {
+    public void toModelType_emptyEmail_throwsIllegalValueException() {
         String csvString = VALID_NAME + ";" + VALID_PHONE + ";;" + VALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
@@ -81,7 +81,7 @@ class CsvAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidIsDone_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidIsDone_throwsIllegalValueException() {
         String csvString = VALID_NAME + ";" + VALID_PHONE + ";" + VALID_EMAIL + ";" + INVALID_DONE;
         CsvAdaptedPerson person = new CsvAdaptedPerson(csvString);
         String expectedMessage = IsDone.MESSAGE_CONSTRAINTS;
