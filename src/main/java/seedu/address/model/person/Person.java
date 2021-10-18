@@ -4,8 +4,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
-import seedu.address.model.person.interests.InterestsList;
-
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -16,10 +14,6 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Address address;
-    private final Gender gender;
-    private final Age age;
-    private final InterestsList interests;
 
     // Data fields
     private final IsDone isDone;
@@ -27,17 +21,12 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, IsDone isDone,
-                  Address address, Gender gender, Age age, InterestsList interests) {
-        requireAllNonNull(name, phone, email, isDone, address, gender, age);
+    public Person(Name name, Phone phone, Email email, IsDone isDone) {
+        requireAllNonNull(name, phone, email, isDone);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.isDone = isDone;
-        this.address = address;
-        this.gender = gender;
-        this.age = age;
-        this.interests = interests;
     }
 
     public Name getName() {
@@ -54,22 +43,6 @@ public class Person {
 
     public IsDone getIsDone() {
         return isDone;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public Age getAge() {
-        return age;
-    }
-
-    public InterestsList getInterests() {
-        return interests;
     }
 
     /**
@@ -102,11 +75,7 @@ public class Person {
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(getName())
                 && otherPerson.getPhone().equals(getPhone())
-                && otherPerson.getEmail().equals(getEmail())
-                && otherPerson.getAddress().equals(getAddress())
-                && otherPerson.getGender().equals(getGender())
-                && otherPerson.getAge().equals(getAge())
-                && otherPerson.getInterests().equals(getInterests());
+                && otherPerson.getEmail().equals(getEmail());
     }
 
     @Override
