@@ -89,8 +89,7 @@ public class LogicManager implements Logic {
             importExportManager.importIntoAddressBook(model);
             storage.saveAddressBook(model.getAddressBook());
         } catch (DataConversionException | IOException e) {
-            logger.warning("Data file not in the correct format.\n" + e.toString()
-                    + "\nData will not be imported. Importing aborted");
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
         }
         return importExportManager.getImportStatus();
     }

@@ -102,8 +102,8 @@ public class CsvAddressBookImportExport implements ImportExport {
     /**
      * Imports the list of valid people found in the CSV file
      *   Will not include duplicate people
-     * @param people list of valid people
-     * @param model model to import into
+     * @param people
+     * @param model
      * @throws IllegalValueException
      */
     public void addImportIntoAddressBook(List<Person> people, Model model) throws IllegalValueException {
